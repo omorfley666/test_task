@@ -1,0 +1,9 @@
+version: '3'
+services:
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./script.sh:/script.sh
+    command: /bin/sh /script.sh

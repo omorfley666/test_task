@@ -1,0 +1,31 @@
+---
+- name: Запуск контейнера с Nginx и вывод информации о ресурсах
+  hosts: localhost
+  tasks:
+    - name: Install requirements
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+        state: present
+
+    - name: Add Docker’s official GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: Update apt and install Docker Compose
+      apt:
+        update_cache: yes
+        name: docker-compose
+        state: present
+
+    - name: deploy docker-compose
+      command: docker-compose up -d
